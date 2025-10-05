@@ -13,6 +13,10 @@ class MyComponent extends React.Component {
             name: event.target.value
         })
     }
+
+    handleClick = () => {
+        alert("Bạn đã click")
+    }
     // jsx chỉ có thể return 1 div có thể viết js trong thẻ div
     render() {
         let name = "Phuoc"
@@ -26,6 +30,9 @@ class MyComponent extends React.Component {
                 <div className="firstName">
                     {console.log("Hello")}
                     Hello {this.state.age} is my age
+                </div>
+                <div>
+                    <button onClick={() => this.handleClick()}>Click me</button>
                 </div>
             </>
         )
