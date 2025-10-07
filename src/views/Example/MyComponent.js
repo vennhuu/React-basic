@@ -1,39 +1,47 @@
 import React from "react";
+import ChildComponent from "./ChildComponent";
+import AddComponent from "./AddComponent";
 
 class MyComponent extends React.Component {
 
     // giúp cập nhật dữ liệu mà k cần phải reload lại trang state là 1 obj
     state = {
-        name: 'Phuoc',
-        age: 21
+        arrJob: [
+            { id: "1", title: 'hehe', salary: '2000' },
+            { id: "2", title: 'hihi', salary: '3000' },
+            { id: "3", title: 'hoho', salary: '1000' },
+        ]
     }
 
-    handleChange = (event) => {
+    addNewJob = (job) => {
+        console.log("Check job from parent", job)
         this.setState({
-            name: event.target.value
+            arrJob: [... this.state.arrJob, job]
         })
     }
 
-    handleClick = () => {
-        alert("Bạn đã click")
+    deleteJob = (job) => {
+        let currentJob = this.state.arrJob;
+        currentJob = currentJob.filter(item => item.id !== job.id);
+        this.setState({
+            arrJob: currentJob
+        })
     }
+
     // jsx chỉ có thể return 1 div có thể viết js trong thẻ div
     render() {
-        let name = "Phuoc"
+        console.log("call render", this.state);
         return (
             // ReactFragment có thể chứa 2 div hợp lệ
             <>
-                <div className="firstName">
-                    <input value={this.state.name} type="text" onChange={(event) => this.handleChange(event)} />
-                    Hello {this.state.name} from QB
-                </div>
-                <div className="firstName">
-                    {console.log("Hello")}
-                    Hello {this.state.age} is my age
-                </div>
-                <div>
-                    <button onClick={() => this.handleClick()}>Click me</button>
-                </div>
+                <AddComponent
+                    addNewJob={this.addNewJob}
+
+                />
+                <ChildComponent
+                    deleteJob={this.deleteJob}
+                    def={this.state.arrJob}
+                />
             </>
         )
     }
